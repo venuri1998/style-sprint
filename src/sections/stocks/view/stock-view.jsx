@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -11,6 +11,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
 import { users } from 'src/_mock/user';
+import { getStocks } from 'src/services/api/stocks';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -32,6 +33,16 @@ export default function StockPage() {
   const [filterName, setFilterName] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+
+  useEffect(() => {
+    getAllStocks()
+  }, []);
+
+  const getAllStocks = async() => {
+    const response = await getStocks()
+    console.log('here it comes', response)
+  }
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
